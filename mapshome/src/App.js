@@ -4,6 +4,7 @@ import MapBoxComponent from './components/MapBoxComponent';
 import OpenStreetComponent from './components/OpenStreetComponent';
 import OwnMapComponent from './components/OwnMapComponent';
 import './assets/stylesMB.css';
+import FeedbackForm from './components/FeedbackForm';
 
 const HomePage = () => {
   return (
@@ -70,6 +71,16 @@ const HomePage = () => {
         </div>
       </section>
 
+
+      <section className="feedback-section">
+        <div className="container">
+          <h2 className="feedback-title">We Value Your Feedback</h2>
+          <p className="feedback-text">Help us improve by sharing your thoughts.</p>
+          <Link to="/feedback" className="feedback-button">Give Feedback</Link>
+        </div>
+      </section>
+
+
       {/* Developer Invitation Section */}
       <section className="developer-section">
         <div className="container">
@@ -108,6 +119,7 @@ const App = () => {
         <Route path="/mapbox" element={<MapBoxComponent />} />
         <Route path="/openstreet" element={<OpenStreetComponent />} />
         <Route path="/ownmap" element={<OwnMapComponent />} />
+        <Route path="/feedback" element={<FeedbackForm/>} /> {/* Feedback Form Route */}
       </Routes>
     </Router>
   );
