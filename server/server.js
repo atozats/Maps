@@ -3,11 +3,14 @@ import fs from 'fs';
 import path from 'path';
 import cors from 'cors';
 import { fileURLToPath } from 'url';
+import nodemailer from 'nodemailer'; // Import Nodemailer
+import dotenv from 'dotenv';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
+dotenv.config();
 const PORT = 5000;
 
 // Enable CORS and JSON middleware
@@ -19,6 +22,9 @@ app.get('/', (req, res) => {
   res.send('Server is running');
 });
 
+
+console.log("🔍 EMAIL_USER:", process.env.EMAIL_USER);
+console.log("🔍 EMAIL_PASS Loaded:", process.env.EMAIL_PASS ? "✅ Yes" : "❌ No");
 // --------------------
 // 1️⃣ Serve Local Places Data
 // --------------------
@@ -219,6 +225,57 @@ app.get('/worldcountriesstates.json', (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+
+// --------------------
+// 3️⃣ Feedback API - Send Emails
+// --------------------
+// Nodemailer configuration
+if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+  console.error("❌ ERROR: Missing email credentials in .env file.");
+  process.exit(1);
+}
+
+// Nodemailer Configuration
+const transporter = nodemailer.createTransport({
+  host: 'mail.atozas.com', // Change this to your email provider's SMTP host
+  port: 587, // Use 465 for SSL, or 587 for TLS (recommended)
+  secure: false, // Set to 'true' for port 465, 'false' for port 587
+  auth: {
+    user: process.env.EMAIL_USER, // Your email address
+    pass: process.env.EMAIL_PASS, // Your email password
+  },
+  tls: {
+    rejectUnauthorized: false, // Helps prevent SSL certificate issues
+  },
+});
+
+
+// Feedback API
+app.post('/feedback', async (req, res) => {
+  const { name, email, message } = req.body;
+
+  if (!name || !email || !message) {
+    return res.status(400).json({ message: "All fields are required!" });
+  }
+
+  const mailOptions = {
+    from: process.env.EMAIL_USER,
+    to: 'info.atozmap@atozas.com',
+    subject: `New Feedback from ${name}`,
+    text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+    res.status(200).json({ message: 'Feedback sent successfully!' });
+  } catch (error) {
+    console.error('Error sending email:', error);
+    res.status(500).json({ message: 'Internal Server Error', error: error.message });
+  }
+});
+
+
 
 // Start the Server
 app.listen(PORT, () => {
