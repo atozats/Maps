@@ -1,0 +1,74 @@
+[
+    {
+        "name": "N S Store",
+        "lat": 12.7454989,
+        "lng": 75.4776396,
+        "type": "store",
+        "district": "dakshina kannada",
+        "taluk": "kadaba",
+        "zoom": 1
+    },
+    {
+        "name": "Tom industries",
+        "lat": 12.7460604,
+        "lng": 75.478563,
+        "type": "point_of_interest",
+        "district": "dakshina kannada",
+        "taluk": "kadaba",
+        "zoom": 5
+    },
+    {
+        "name": "Bethany Ashramam",
+        "lat": 12.7465866,
+        "lng": 75.47609,
+        "type": "church",
+        "district": "dakshina kannada",
+        "taluk": "kadaba",
+        "zoom":  4  
+    },
+    {
+        "name": "Gundimajal House",
+        "lat": 12.720602,
+        "lng": 75.4775167,
+        "type": "point_of_interest",
+        "district": "dakshina kannada",
+        "taluk": "kadaba",
+        "zoom":  4  
+    },
+    {
+        "name": "shri Naakuru Gaya Kshetra, Kodimbala village, Sulya TQ, PF87+8WP, Karnataka 574221, India",
+        "lat": 12.720602,
+        "lng": 75.4775167,
+        "type": "hindu_temple",
+        "district": "dakshina kannada",
+        "taluk": "kadaba",
+        "zoom":  4  
+    },
+    {
+        "name": "Ananda Kodimbala,Anugraha house",
+        "lat": 12.720602,
+        "lng": 75.4775167,
+        "type": "point_of_interest",
+        "district": "dakshina kannada",
+        "taluk": "kadaba",
+        "zoom":  4  
+    },
+    {
+        "name": "Chicken shop Kodimbala",
+        "lat": 12.7206038,
+        "lng": 75.4776447,
+        "type": "point_of_interest",
+        "district": "dakshina kannada",
+        "taluk": "kadaba",
+        "zoom":  4  
+    },
+    {
+        "name": "AMRUTHA COCONUT OIL AND GINGELLY OIL (MAHAGANPATI INDUSTRY) RAMNAGAR KODIMBALA",
+        "lat": 12.7205276,
+        "lng": 75.4770126,
+        "type": "point_of_interest",
+        "district": "dakshina kannada",
+        "taluk": "kadaba",
+        "zoom":  4  
+    }
+ ]

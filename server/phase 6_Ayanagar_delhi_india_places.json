@@ -1,0 +1,110 @@
+[
+    {
+        "name": "New Delhi",
+        "lat": 28.6139298,
+        "lng": 77.2088282,
+        "type": "locality",
+        "district": "Ayanagar",
+        "taluk": "phase 6",
+        "zoom": 6
+    },
+    {
+        "name": "Gulshan",
+        "lat": 28.469653608089725,
+        "lng": 77.13055852639944,
+        "type": "locality",
+        "district": "Ayanagar",
+        "taluk": "phase 6",
+        "zoom": 6
+    },
+   
+    {
+        "name": "Small Shani temple",
+        "lat": 28.469370577379184,
+        "lng": 77.12962047955668,
+        "type": "locality",
+        "district": "Ayanagar",
+        "taluk": "phase 6",
+        "zoom": 6
+    },
+    {
+        "name": "Arya Public School",
+        "lat": 28.469291963070106,
+        "lng": 77.13025804705232,
+        "type": "locality",
+        "district": "Ayanagar",
+        "taluk": "phase 6",
+        "zoom": 6
+    },
+    {
+        "name": "Rolls Kings",
+        "lat": 28.469282236910377,
+        "lng": 77.1302690572535,
+        "type": "locality",
+        "district": "Ayanagar",
+        "taluk": "phase 6",
+        "zoom": 6
+    },
+
+    {
+        "name": "Baisoya fitness fire gym",
+        "lat": 28.469813048134068,
+        "lng": 77.1296131610785,
+        "type": "sublocality_level_3",
+        "district": "Ayanagar",
+        "taluk": "phase 6",
+        "zoom": 3
+    },
+    {
+        "name": "Umesh Bhandari",
+        "lat": 28.469702212009086,
+        "lng": 77.12978367192395,
+        "type": "neighborhood",
+        "district": "Ayanagar",
+        "taluk": "phase 6",
+        "zoom": 5
+    },
+
+    
+    {
+        "name": "Devi Cosmetics and Gift Store",
+        "lat": 28.469833820813825,
+        "lng": 77.12982431066726,
+        "type": "neighborhood",
+        "district": "Ayanagar",
+        "taluk": "phase 6",
+        "zoom": 2
+    },
+
+    {
+        "name": "Kiro's home",
+        "lat": 28.469816611262022,
+        "lng": 77.13043864121914,
+        "type": "restaurant",
+        "district": "Ayanagar",
+        "taluk": "phase 6",
+        "zoom": 3
+    },
+    {
+        "name": "Battery's Flat",
+        "lat": 28.46963688077108,
+        "lng": 77.13042825707227,
+        "type": "home_goods_store",
+        "district": "Ayanagar",
+        "taluk": "phase 6",
+        "zoom": 1
+    },
+ 
+     
+    {
+        "name": "ATOZAS",
+        "lat": 28.46992381725781,
+        "lng": 77.13022316917393,
+        "type": "neighborhood",
+        "district": "Ayanagar",
+        "taluk": "phase 6",
+        "zoom": 5
+    }
+]
+
+
