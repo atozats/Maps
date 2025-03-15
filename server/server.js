@@ -5,6 +5,9 @@ import cors from 'cors';
 import { fileURLToPath } from 'url';
 import nodemailer from 'nodemailer'; // Import Nodemailer
 import dotenv from 'dotenv';
+import connectDB from './database.js'; // Import database connection
+import Feedback from './models/Feedback.js'; // Import Feedback model
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -12,6 +15,10 @@ const __dirname = path.dirname(__filename);
 const app = express();
 dotenv.config();
 const PORT = 5000;
+
+
+// Connect to MongoDB
+connectDB();
 
 // Enable CORS and JSON middleware
 app.use(cors());
@@ -252,25 +259,34 @@ const transporter = nodemailer.createTransport({
 
 
 // Feedback API
+// --------------------
+// Feedback API - Save to Database and Send Email
+// --------------------
 app.post('/feedback', async (req, res) => {
   const { name, email, message } = req.body;
 
   if (!name || !email || !message) {
-    return res.status(400).json({ message: "All fields are required!" });
+    return res.status(400).json({ message: 'All fields are required!' });
   }
 
-  const mailOptions = {
-    from: process.env.EMAIL_USER,
-    to: 'info.atozmap@atozas.com',
-    subject: `New Feedback from ${name}`,
-    text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
-  };
-
   try {
+    // Save feedback to the database
+    const feedback = new Feedback({ name, email, message });
+    await feedback.save();
+
+    // Send email
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: 'info.atozmap@atozas.com',
+      subject: `New Feedback from ${name}`,
+      text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
+    };
+
     await transporter.sendMail(mailOptions);
+
     res.status(200).json({ message: 'Feedback sent successfully!' });
   } catch (error) {
-    console.error('Error sending email:', error);
+    console.error('Error saving feedback or sending email:', error);
     res.status(500).json({ message: 'Internal Server Error', error: error.message });
   }
 });
