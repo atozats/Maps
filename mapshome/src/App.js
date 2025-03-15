@@ -97,7 +97,7 @@ const HomePage = () => {
               <p className="github-text">
                 If you’re passionate about mapping, open-source development, or innovative solutions, we’d love to collaborate with you. Let’s build something extraordinary together!
               </p>
-              <a href="https://github.com" className="github-button">Join Us on GitHub</a>
+              <a href="https://github.com/atozats/Maps.git" className="github-button">Join Us on GitHub</a>
             </div>
           </div>
         </div>
@@ -118,7 +118,7 @@ const HomePage = () => {
             If you’re passionate about mapping, open-source development, or innovative solutions, we’d love to collaborate with you. Let’s build something extraordinary together!
           </p>
           <div className="cta-container">
-            <a href="#" className="cta-button">Join Us on GitHub</a>
+            <a href="https://github.com/atozats/Maps.git" className="cta-button">Join Us on GitHub</a>
           </div>
         </div>
       </section>
@@ -149,8 +149,4 @@ const App = () => {
 };
 
 export default App;
-
-
-
-
 

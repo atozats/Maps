@@ -252,7 +252,7 @@ const FeedbackForm = () => {
           "Great code is not just written; it's crafted with passion and collaboration."
         </p>
         <a
-          href="https://github.com"
+          href="https://github.com/atozats/Maps.git"
           style={styles.githubLink}
           onMouseOver={(e) => {
             e.target.style.color = styles.githubLinkHover.color;
