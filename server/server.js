@@ -257,11 +257,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-
-// Feedback API
-// --------------------
 // Feedback API - Save to Database and Send Email
-// --------------------
 app.post('/feedback', async (req, res) => {
   const { name, email, message } = req.body;
 
@@ -274,15 +270,25 @@ app.post('/feedback', async (req, res) => {
     const feedback = new Feedback({ name, email, message });
     await feedback.save();
 
-    // Send email
-    const mailOptions = {
+    // Send email to the user
+    const userMailOptions = {
       from: process.env.EMAIL_USER,
-      to: 'info.atozmap@atozas.com',
+      to: email, // Send email to the user's provided email address
+      subject: 'Thank You for Your Feedback',
+      text: `Hi ${name},\n\nThank you for your feedback. We have received the following message from you:\n\n"${message}"\n\nWe appreciate your input and will get back to you soon.\n\nBest regards,\nThe AtozMap Team`,
+    };
+
+    await transporter.sendMail(userMailOptions);
+
+    // Send email to admin (optional)
+    const adminMailOptions = {
+      from: process.env.EMAIL_USER,
+      to: 'info.atozmap@atozas.com', // Admin email
       subject: `New Feedback from ${name}`,
       text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
     };
 
-    await transporter.sendMail(mailOptions);
+    await transporter.sendMail(adminMailOptions);
 
     res.status(200).json({ message: 'Feedback sent successfully!' });
   } catch (error) {
@@ -290,8 +296,6 @@ app.post('/feedback', async (req, res) => {
     res.status(500).json({ message: 'Internal Server Error', error: error.message });
   }
 });
-
-
 
 // Start the Server
 app.listen(PORT, () => {
