@@ -72,11 +72,34 @@ const HomePage = () => {
       </section>
 
 
-      <section className="feedback-section">
+     {/* Feedback and GitHub Invitation Section */}
+     <section className="feedback-github-section">
         <div className="container">
-          <h2 className="feedback-title">We Value Your Feedback</h2>
-          <p className="feedback-text">Help us improve by sharing your thoughts.</p>
-          <Link to="/feedback" className="feedback-button">Give Feedback</Link>
+          <div className="feedback-github-grid">
+            {/* Feedback Box */}
+            <div className="feedback-box">
+              <h2 className="feedback-title">We Value Your Feedback</h2>
+              <blockquote className="feedback-quote">
+                "Your feedback is the compass that guides our journey to improvement."
+              </blockquote>
+              <p className="feedback-text">
+                Help us improve by sharing your thoughts. Your insights are invaluable to us.
+              </p>
+              <Link to="/feedback" className="feedback-button">Give Feedback</Link>
+            </div>
+
+            {/* GitHub Invitation Box */}
+            <div className="github-box">
+              <h2 className="github-title">Join Our Development Journey</h2>
+              <blockquote className="github-quote">
+                "Great code is not just written; it's crafted with passion and collaboration."
+              </blockquote>
+              <p className="github-text">
+                If you’re passionate about mapping, open-source development, or innovative solutions, we’d love to collaborate with you. Let’s build something extraordinary together!
+              </p>
+              <a href="https://github.com/atozats/Maps.git" className="github-button">Join Us on GitHub</a>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -95,7 +118,7 @@ const HomePage = () => {
             If you’re passionate about mapping, open-source development, or innovative solutions, we’d love to collaborate with you. Let’s build something extraordinary together!
           </p>
           <div className="cta-container">
-            <a href="#" className="cta-button">Join Us on GitHub</a>
+            <a href="https://github.com/atozats/Maps.git" className="cta-button">Join Us on GitHub</a>
           </div>
         </div>
       </section>
@@ -126,3 +149,4 @@ const App = () => {
 };
 
 export default App;
+

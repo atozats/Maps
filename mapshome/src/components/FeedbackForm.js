@@ -52,6 +52,7 @@ const FeedbackForm = () => {
       backgroundColor: '#f4f4f9',
       padding: '20px',
       fontFamily: 'Arial, sans-serif',
+      flexDirection: 'column', // Align items vertically
     },
     feedbackContainer: {
       backgroundColor: '#ffffff',
@@ -60,6 +61,7 @@ const FeedbackForm = () => {
       boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
       maxWidth: '450px',
       width: '100%',
+      marginBottom: '2rem', // Space between form and GitHub box
     },
     heading: {
       textAlign: 'center',
@@ -123,10 +125,53 @@ const FeedbackForm = () => {
       fontSize: '0.9rem',
       color: '#333',
     },
+    githubBox: {
+      backgroundColor: '#ffffff',
+      padding: '2rem',
+      borderRadius: '12px',
+      boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+      maxWidth: '450px',
+      width: '100%',
+      textAlign: 'center',
+    },
+    quote: {
+      fontStyle: 'italic',
+      color: '#666',
+      marginBottom: '1.5rem',
+      fontSize: '1rem',
+    },
+    githubLink: {
+      color: '#007bff',
+      textDecoration: 'none',
+      fontSize: '1.1rem',
+      fontWeight: '600',
+      transition: 'all 0.3s ease-in-out',
+      position: 'relative',
+      paddingBottom: '4px',
+    },
+    githubLinkHover: {
+      color: '#0056b3',
+    },
+    githubLinkUnderline: {
+      position: 'absolute',
+      bottom: '0',
+      left: '0',
+      width: '100%',
+      height: '2px',
+      backgroundColor: '#007bff',
+      transform: 'scaleX(0)',
+      transformOrigin: 'bottom right',
+      transition: 'transform 0.3s ease-in-out',
+    },
+    githubLinkHoverUnderline: {
+      transform: 'scaleX(1)',
+      transformOrigin: 'bottom left',
+    },
   };
 
   return (
     <div style={styles.container}>
+      {/* Feedback Form */}
       <div style={styles.feedbackContainer}>
         <h2 style={styles.heading}>We Value Your Feedback</h2>
         <p style={{ textAlign: 'center', color: '#666', marginBottom: '1rem' }}>
@@ -199,6 +244,28 @@ const FeedbackForm = () => {
             {status.includes('✅') ? <span style={{ color: 'green' }}>{status}</span> : <span style={{ color: 'red' }}>{status}</span>}
           </p>
         )}
+      </div>
+
+      {/* GitHub Box */}
+      <div style={styles.githubBox}>
+        <p style={styles.quote}>
+          "Great code is not just written; it's crafted with passion and collaboration."
+        </p>
+        <a
+          href="https://github.com/atozats/Maps.git"
+          style={styles.githubLink}
+          onMouseOver={(e) => {
+            e.target.style.color = styles.githubLinkHover.color;
+            e.target.querySelector('.underline').style.transform = styles.githubLinkHoverUnderline.transform;
+          }}
+          onMouseOut={(e) => {
+            e.target.style.color = styles.githubLink.color;
+            e.target.querySelector('.underline').style.transform = styles.githubLinkUnderline.transform;
+          }}
+        >
+          Join Us on GitHub
+          <span className="underline" style={styles.githubLinkUnderline}></span>
+        </a>
       </div>
     </div>
   );
