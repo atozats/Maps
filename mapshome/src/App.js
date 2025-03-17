@@ -15,6 +15,11 @@ const HomePage = () => {
           <h1 className="header-title">atozmap</h1>
           <p className="tagline">Exploring the world through beautiful cartography</p>
         </div>
+        <div className="quote-container">
+          <p className="inspirational-quote">
+            "A map is the greatest of all epic poems. Its lines and colors show the realization of great dreams." 
+          </p>
+        </div>
       </header>
 
       {/* Introduction Section */}
@@ -62,7 +67,7 @@ const HomePage = () => {
               <div className="map-content">
                 <h3 className="map-card-title">Map from OwnMap</h3>
                 <p className="map-card-text">
-                  The most unique aspect of our project is the OwnMap implementation. Built entirely from scratch without relying on external APIs or tokens, this custom map solution uses three JSON files (<code>countriesandstates.json</code>, <code>countries-110m.json</code>, and <code>allcountriesdetails.json</code>) to render maps. This approach gives developers complete control over their cartographic creations.
+                  The most unique aspect of our project is the OwnMap implementation. Built entirely from scratch without relying on external APIs or tokens, this custom map solution uses three JSON files (<code>countriesandstates.json</code>, <code>countries-110m.json</code>, and <code>allcountriesdetails.json</code>) to render maps. This approach gives developers complete control over their cartographic creations. We are grateful for the availability of these JSON files, which have made this implementation possible.
                 </p>
                 <Link to="/ownmap" className="map-button">Explore OwnMap</Link>
               </div>
@@ -72,8 +77,8 @@ const HomePage = () => {
       </section>
 
 
-     {/* Feedback and GitHub Invitation Section */}
-     <section className="feedback-github-section">
+      {/* Feedback and GitHub Invitation Section */}
+      <section className="feedback-github-section">
         <div className="container">
           <div className="feedback-github-grid">
             {/* Feedback Box */}
@@ -142,7 +147,7 @@ const App = () => {
         <Route path="/mapbox" element={<MapBoxComponent />} />
         <Route path="/openstreet" element={<OpenStreetComponent />} />
         <Route path="/ownmap" element={<OwnMapComponent />} />
-        <Route path="/feedback" element={<FeedbackForm/>} /> {/* Feedback Form Route */}
+        <Route path="/feedback" element={<FeedbackForm />} /> {/* Feedback Form Route */}
       </Routes>
     </Router>
   );

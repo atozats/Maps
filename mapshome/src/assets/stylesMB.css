@@ -27,10 +27,11 @@ body {
 }
 
 /* Header Styles */
+/* Header Styles */
 .site-header {
   background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
   color: var(--text-light);
-  padding: 120px 0;
+  padding: 150px 0;
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -54,11 +55,71 @@ body {
 
 .header-title {
   font-size: 4.5rem;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
   letter-spacing: 2px;
   text-transform: lowercase;
   font-weight: 700;
   animation: fadeInDown 1s ease-out;
+  color: var(--text-light);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.tagline {
+  font-size: 1.6rem;
+  font-weight: 300;
+  animation: fadeInUp 1s ease-out 0.5s;
+  animation-fill-mode: both;
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 600px;
+  margin: 0 auto 30px;
+  line-height: 1.6;
+}
+
+.quote-container {
+  margin-top: 30px;
+  animation: fadeIn 1s ease-out 1s;
+  animation-fill-mode: both;
+}
+
+.inspirational-quote {
+  font-style: italic;
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .tagline {
@@ -71,7 +132,7 @@ body {
 /* Introduction Section */
 .intro-section {
   background-color: white;
-  padding: 80px 0;
+  padding: 20px 0;
   text-align: center;
 }
 
@@ -90,6 +151,7 @@ body {
   animation: fadeIn 1s ease-out 0.5s;
   animation-fill-mode: both;
 }
+
 
 /* Map Showcase Section */
 .map-showcase {
@@ -117,6 +179,8 @@ body {
   overflow: hidden;
   box-shadow: var(--card-shadow);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .map-card:hover {
@@ -124,28 +188,33 @@ body {
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
 }
 
-
-
-.map-card:hover .map-image {
-  transform: scale(1.1);
-}
-
-
-
 .map-content {
   padding: 30px;
+  position: relative;
+  z-index: 1;
+  background-color: white;
 }
 
 .map-card-title {
   font-size: 1.6rem;
   margin-bottom: 15px;
   color: var(--dark-color);
+  transition: color 0.3s ease;
+}
+
+.map-card:hover .map-card-title {
+  color: var(--primary-color);
 }
 
 .map-card-text {
   margin-bottom: 20px;
   color: #555;
   font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.map-card:hover .map-card-text {
+  color: var(--dark-color);
 }
 
 .map-button {
