@@ -29,12 +29,12 @@ Follow these steps to set up and run the project locally:
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/yourusername/atozmap.git
+git clone https://github.com/atozats/Maps.git
 ```
 
 ### 2. Navigate to the Project Directories
 ```bash
-cd maps
+cd Maps
 ```
 
 ### 3. Install Dependencies
