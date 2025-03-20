@@ -5,6 +5,7 @@ import OpenStreetComponent from './components/OpenStreetComponent';
 import OwnMapComponent from './components/OwnMapComponent';
 import './assets/stylesMB.css';
 import FeedbackForm from './components/FeedbackForm';
+import BetaAccessRoute from './components/BetaAccessRoute';
 
 const HomePage = () => {
   return (
@@ -143,12 +144,15 @@ const App = () => {
   return (
     <Router>
       <Routes>
+      <Route element={<BetaAccessRoute />}>
         <Route path="/" element={<HomePage />} />
         <Route path="/mapbox" element={<MapBoxComponent />} />
         <Route path="/openstreet" element={<OpenStreetComponent />} />
         <Route path="/ownmap" element={<OwnMapComponent />} />
         <Route path="/feedback" element={<FeedbackForm />} /> {/* Feedback Form Route */}
+      </Route>
       </Routes>
+
     </Router>
   );
 };

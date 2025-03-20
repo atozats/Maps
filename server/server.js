@@ -7,6 +7,10 @@ import nodemailer from 'nodemailer'; // Import Nodemailer
 import dotenv from 'dotenv';
 import connectDB from './database.js'; // Import database connection
 import Feedback from './models/Feedback.js'; // Import Feedback model
+import sendsms from "./sendsms.js"
+import BetaUser from './models/BetaUser.js';
+import jwt from 'jsonwebtoken';
+
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -41,20 +45,20 @@ const placesFilePath = path.join(__dirname, 'phase_6_Ayanagar_delhi_india_places
 app.get('/places', (req, res) => {
   try {
     const placesFilePath = path.join(__dirname, '../server/phase 6_Ayanagar_delhi_india_places.json');
-    
+
     if (!fs.existsSync(placesFilePath)) {
       console.warn(`File not found: ${placesFilePath}`);
-      
+
       // Return empty places array as fallback
-      return res.json({ 
+      return res.json({
         places: [],
         notice: "Places file not found. This is a fallback response."
       });
-      
+
       // Alternatively, you could redirect to another endpoint or return a specific error
       // return res.status(404).json({ error: "Places data file not found" });
     }
-    
+
     const placesData = JSON.parse(fs.readFileSync(placesFilePath, 'utf-8'));
     res.json(placesData);
   } catch (error) {
@@ -102,7 +106,7 @@ function calculateZoom(country) {
   }
 
   let zoom;
-  
+
   if (country.area) {
     if (country.area > 7000000) zoom = 3;
     else if (country.area > 2000000) zoom = 3.5;
@@ -296,6 +300,57 @@ app.post('/feedback', async (req, res) => {
     res.status(500).json({ message: 'Internal Server Error', error: error.message });
   }
 });
+
+
+
+// BetaUser API
+
+// Generate OTP
+const generateOtp = () => Math.floor(100000 + Math.random() * 900000).toString();
+
+// Request OTP
+app.post('/request-otp', async (req, res) => {
+  const { phone } = req.body;
+
+  const user = await BetaUser.findOne({ phone });
+  if (!user) return res.status(400).json({ success: false, message: 'Phone number not registered.' });
+
+  const otp = generateOtp();
+  user.otp = otp;
+  user.otpExpiresAt = new Date(Date.now() + 5 * 60000); // OTP expires in 5 min
+  await user.save();
+
+  console.log(`OTP for ${phone}: ${otp}`); // Replace with SMS API
+  await sendsms(phone,otp)
+  res.json({ success: true, message: 'OTP sent.' });
+});
+
+// Verify OTP
+app.post('/verify-otp', async (req, res) => {
+  const { phone, otp } = req.body;
+
+  const user = await BetaUser.findOne({ phone, otp });
+  if (!user || user.otpExpiresAt < new Date()) {
+    return res.status(400).json({ success: false, message: 'Invalid or expired OTP.' });
+  }
+
+  const token = jwt.sign({ phone }, 'secret', { expiresIn: '30d' });
+  user.otp = null; // Clear OTP after verification
+  await user.save();
+
+  res.json({ success: true, token });
+});
+
+// Verify Token
+app.post('/verify-token', async (req, res) => {
+  try {
+    const decoded = jwt.verify(req.body.token, 'secret');
+    res.json({ success: true });
+  } catch {
+    res.status(400).json({ success: false });
+  }
+});
+
 
 // Start the Server
 app.listen(PORT, () => {

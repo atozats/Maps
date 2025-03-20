@@ -1,0 +1,8 @@
+mapshome\src\context\BetaAccessContext.js  context  file
+
+wrap index with BetaAccessProvider 
+
+
+components/BetaAccessRoute.jsx
+
+wrap  <Route element={<BetaAccessRoute />}> in routes

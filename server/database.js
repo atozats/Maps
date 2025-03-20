@@ -15,3 +15,4 @@ const connectDB = async () => {
 };
 
 export default connectDB;
+// server mongodb connection "mongodb://atozmapadmin:b04g00t66%40atozmap@127.0.0.1:28642/atozmap"
