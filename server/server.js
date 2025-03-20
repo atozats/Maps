@@ -261,46 +261,35 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// Feedback API - Save to Database and Send Email
+// Feedback API - Save to Database and Send Admin Email
 app.post('/feedback', async (req, res) => {
-  const { name, email, message } = req.body;
-
-  if (!name || !email || !message) {
+  const { name, phone, message } = req.body;  // Changed from email to phone
+  
+  if (!name || !phone || !message) {
     return res.status(400).json({ message: 'All fields are required!' });
   }
-
+  
   try {
     // Save feedback to the database
-    const feedback = new Feedback({ name, email, message });
+    const feedback = new Feedback({ name, phone, message });
     await feedback.save();
-
-    // Send email to the user
-    const userMailOptions = {
-      from: process.env.EMAIL_USER,
-      to: email, // Send email to the user's provided email address
-      subject: 'Thank You for Your Feedback',
-      text: `Hi ${name},\n\nThank you for your feedback. We have received the following message from you:\n\n"${message}"\n\nWe appreciate your input and will get back to you soon.\n\nBest regards,\nThe AtozMap Team`,
-    };
-
-    await transporter.sendMail(userMailOptions);
-
+    
     // Send email to admin (optional)
     const adminMailOptions = {
       from: process.env.EMAIL_USER,
       to: 'info.atozmap@atozas.com', // Admin email
       subject: `New Feedback from ${name}`,
-      text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
+      text: `Name: ${name}\nPhone: ${phone}\nMessage: ${message}`,
     };
-
+    
     await transporter.sendMail(adminMailOptions);
-
+    
     res.status(200).json({ message: 'Feedback sent successfully!' });
   } catch (error) {
     console.error('Error saving feedback or sending email:', error);
     res.status(500).json({ message: 'Internal Server Error', error: error.message });
   }
 });
-
 
 
 // BetaUser API

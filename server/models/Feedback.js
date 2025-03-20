@@ -1,4 +1,5 @@
-// models/Feedback.js
+
+
 import mongoose from 'mongoose';
 
 const feedbackSchema = new mongoose.Schema(
@@ -7,7 +8,7 @@ const feedbackSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    email: {
+    phone: {  // Changed from email to phone
       type: String,
       required: true,
     },
