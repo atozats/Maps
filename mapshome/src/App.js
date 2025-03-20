@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import MapBoxComponent from './components/MapBoxComponent';
 import OpenStreetComponent from './components/OpenStreetComponent';
@@ -6,7 +6,30 @@ import OwnMapComponent from './components/OwnMapComponent';
 import './assets/stylesMB.css';
 import FeedbackForm from './components/FeedbackForm';
 import BetaAccessRoute from './components/BetaAccessRoute';
+import { BetaAccessContext } from './context/BetaAccessContext';
 
+
+const NavBar = () => {
+  const { isBetaVerified, logoutUser, username } = useContext(BetaAccessContext);
+  
+  return (
+    <nav className="site-navbar">
+      <div className="navbar-container">
+        <div className="navbar-logo">
+          <Link to="/" className="logo-link">atozmap</Link>
+        </div>
+        <div className="navbar-links">
+          {isBetaVerified && (
+            <>
+              <span className="welcome-message">Welcome, {username}</span>
+              <button onClick={logoutUser} className="logout-button">Logout</button>
+            </>
+          )}
+        </div>
+      </div>
+    </nav>
+  );
+};
 const HomePage = () => {
   return (
     <div className="homepage">
@@ -139,21 +162,31 @@ const HomePage = () => {
     </div>
   );
 };
+const PageWrapper = ({ children }) => {
+  return (
+    <>
+      <NavBar />
+      {children}
+    </>
+  );
+};
+
 
 const App = () => {
   return (
-    <Router>
-      <Routes>
-      <Route element={<BetaAccessRoute />}>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/mapbox" element={<MapBoxComponent />} />
-        <Route path="/openstreet" element={<OpenStreetComponent />} />
-        <Route path="/ownmap" element={<OwnMapComponent />} />
-        <Route path="/feedback" element={<FeedbackForm />} /> {/* Feedback Form Route */}
-      </Route>
-      </Routes>
+  
 
-    </Router>
+     <Router>
+          <Routes>
+            <Route element={<BetaAccessRoute />}>
+              <Route path="/" element={<PageWrapper><HomePage /></PageWrapper>} />
+              <Route path="/mapbox" element={<PageWrapper><MapBoxComponent /></PageWrapper>} />
+              <Route path="/openstreet" element={<PageWrapper><OpenStreetComponent /></PageWrapper>} />
+              <Route path="/ownmap" element={<PageWrapper><OwnMapComponent /></PageWrapper>} />
+              <Route path="/feedback" element={<PageWrapper><FeedbackForm /></PageWrapper>} />
+            </Route>
+          </Routes>
+        </Router>
   );
 };
 

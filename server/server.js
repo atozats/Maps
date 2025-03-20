@@ -306,47 +306,154 @@ app.post('/feedback', async (req, res) => {
 // BetaUser API
 
 // Generate OTP
+
 const generateOtp = () => Math.floor(100000 + Math.random() * 900000).toString();
 
-// Request OTP
-app.post('/request-otp', async (req, res) => {
-  const { phone } = req.body;
-
-  const user = await BetaUser.findOne({ phone });
-  if (!user) return res.status(400).json({ success: false, message: 'Phone number not registered.' });
-
-  const otp = generateOtp();
-  user.otp = otp;
-  user.otpExpiresAt = new Date(Date.now() + 5 * 60000); // OTP expires in 5 min
-  await user.save();
-
-  console.log(`OTP for ${phone}: ${otp}`); // Replace with SMS API
-  await sendsms(phone,otp)
-  res.json({ success: true, message: 'OTP sent.' });
+// Register new user
+app.post('/register', async (req, res) => {
+  try {
+    const { username, phone } = req.body;
+    
+    // Validate input
+    if (!username || !phone) {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Username and phone number are required.' 
+      });
+    }
+    
+    // Check if phone number already exists
+    const existingUser = await BetaUser.findOne({ phone });
+    if (existingUser) {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Phone number already registered.' 
+      });
+    }
+    
+    // Create new user
+    const newUser = new BetaUser({
+      username,
+      phone
+    });
+    
+    // Generate and save OTP
+    const otp = generateOtp();
+    newUser.otp = otp;
+    newUser.otpExpiresAt = new Date(Date.now() + 5 * 60000); // OTP expires in 5 min
+    await newUser.save();
+    
+    // Send OTP via SMS
+    console.log(`Registration OTP for ${phone}: ${otp}`);
+    await sendsms(phone, otp);
+    
+    res.json({ 
+      success: true, 
+      message: 'User registered. OTP sent for verification.' 
+    });
+  } catch (error) {
+    console.error('Registration error:', error);
+    res.status(500).json({ 
+      success: false, 
+      message: 'Registration failed. Please try again later.' 
+    });
+  }
 });
 
-// Verify OTP
-app.post('/verify-otp', async (req, res) => {
-  const { phone, otp } = req.body;
+// Request OTP (for login)
+app.post('/request-otp', async (req, res) => {
+  try {
+    const { phone } = req.body;
 
-  const user = await BetaUser.findOne({ phone, otp });
-  if (!user || user.otpExpiresAt < new Date()) {
-    return res.status(400).json({ success: false, message: 'Invalid or expired OTP.' });
+    const user = await BetaUser.findOne({ phone });
+    if (!user) {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Phone number not registered.' 
+      });
+    }
+
+    const otp = generateOtp();
+    user.otp = otp;
+    user.otpExpiresAt = new Date(Date.now() + 5 * 60000); // OTP expires in 5 min
+    await user.save();
+
+    console.log(`Login OTP for ${phone}: ${otp}`);
+    await sendsms(phone, otp);
+    
+    res.json({ 
+      success: true, 
+      message: 'OTP sent.' 
+    });
+  } catch (error) {
+    console.error('Request OTP error:', error);
+    res.status(500).json({ 
+      success: false, 
+      message: 'Failed to send OTP. Please try again later.' 
+    });
   }
+});
 
-  const token = jwt.sign({ phone }, 'secret', { expiresIn: '30d' });
-  user.otp = null; // Clear OTP after verification
-  await user.save();
+// Verify OTP (for both login and registration)
+app.post('/verify-otp', async (req, res) => {
+  try {
+    const { phone, otp, isRegistering, username } = req.body;
 
-  res.json({ success: true, token });
+    const user = await BetaUser.findOne({ phone });
+    if (!user || user.otp !== otp || user.otpExpiresAt < new Date()) {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Invalid or expired OTP.' 
+      });
+    }
+
+    // Generate JWT token with user info
+    const token = jwt.sign(
+      { 
+        phone,
+        username: user.username,
+        userId: user._id 
+      }, 
+      'your_jwt_secret_key', 
+      { expiresIn: '30d' }
+    );
+    
+    // Update user information
+    user.otp = null; // Clear OTP after verification
+    user.lastLogin = new Date();
+    await user.save();
+
+    res.json({ 
+      success: true, 
+      token,
+      username: user.username 
+    });
+  } catch (error) {
+    console.error('OTP verification error:', error);
+    res.status(500).json({ 
+      success: false, 
+      message: 'Verification failed. Please try again later.' 
+    });
+  }
 });
 
 // Verify Token
 app.post('/verify-token', async (req, res) => {
   try {
-    const decoded = jwt.verify(req.body.token, 'secret');
-    res.json({ success: true });
-  } catch {
+    const decoded = jwt.verify(req.body.token, 'your_jwt_secret_key');
+    
+    // Check if user still exists in database
+    const user = await BetaUser.findOne({ phone: decoded.phone });
+    if (!user) {
+      return res.status(400).json({ success: false });
+    }
+    
+    res.json({ 
+      success: true,
+      username: user.username
+    });
+  } catch (error) {
+    console.error('Token verification error:', error);
     res.status(400).json({ success: false });
   }
 });

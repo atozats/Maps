@@ -1,22 +1,67 @@
 
+
 import { useContext, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { BetaAccessContext } from "../context/BetaAccessContext";
 
 const BetaAccessRoute = () => {
-  const { isBetaVerified, requestOtp, verifyOtp, otpSent, setOtp } = useContext(BetaAccessContext);
+  const { isBetaVerified, requestOtp, verifyOtp, registerUser, otpSent, isRegistering } = useContext(BetaAccessContext);
   const [phoneInput, setPhoneInput] = useState("");
   const [otpInput, setOtpInput] = useState("");
+  const [username, setUsername] = useState("");
+  const [showRegister, setShowRegister] = useState(false);
 
   if (isBetaVerified) {
     return <Outlet />;
   }
 
+  const handleAuthAction = () => {
+    if (showRegister) {
+      if (!isRegistering) {
+        registerUser(username, phoneInput);
+      } else {
+        verifyOtp(otpInput);
+      }
+    } else {
+      if (!otpSent) {
+        requestOtp(phoneInput);
+      } else {
+        verifyOtp(otpInput);
+      }
+    }
+  };
+
+  const toggleForm = () => {
+    setShowRegister(!showRegister);
+    setPhoneInput("");
+    setOtpInput("");
+    setUsername("");
+  };
+
   return (
     <div style={styles.betaAccessContainer}>
-      {!otpSent ? (
-        <div style={styles.phoneForm}>
-          <h2 style={styles.heading}>Enter your phone number for beta access</h2>
+      <div style={styles.formContainer}>
+        <h2 style={styles.heading}>
+          {showRegister
+            ? isRegistering && otpSent
+              ? "Verify OTP to Complete Registration"
+              : "Register for Beta Access"
+            : !otpSent
+            ? "Login to Beta Access"
+            : "Enter OTP to Login"}
+        </h2>
+
+        {showRegister && !isRegistering && (
+          <input
+            type="text"
+            placeholder="Enter your username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            style={styles.inputField}
+          />
+        )}
+
+        {(!otpSent || showRegister) && !isRegistering && (
           <input
             type="text"
             placeholder="Enter phone number"
@@ -24,13 +69,9 @@ const BetaAccessRoute = () => {
             onChange={(e) => setPhoneInput(e.target.value)}
             style={styles.inputField}
           />
-          <button onClick={() => requestOtp(phoneInput)} style={styles.submitButton}>
-            Request OTP
-          </button>
-        </div>
-      ) : (
-        <div style={styles.otpForm}>
-          <h2 style={styles.heading}>Enter the OTP sent to your phone</h2>
+        )}
+
+        {(otpSent || isRegistering) && (
           <input
             type="text"
             placeholder="Enter OTP"
@@ -38,11 +79,24 @@ const BetaAccessRoute = () => {
             onChange={(e) => setOtpInput(e.target.value)}
             style={styles.inputField}
           />
-          <button onClick={() => verifyOtp(otpInput)} style={styles.submitButton}>
-            Verify OTP
-          </button>
-        </div>
-      )}
+        )}
+
+        <button onClick={handleAuthAction} style={styles.submitButton}>
+          {showRegister
+            ? isRegistering && otpSent
+              ? "Complete Registration"
+              : "Register"
+            : !otpSent
+            ? "Request OTP"
+            : "Login"}
+        </button>
+
+        <p style={styles.toggleText} onClick={toggleForm}>
+          {showRegister
+            ? "Already have an account? Login"
+            : "Don't have an account? Register"}
+        </p>
+      </div>
     </div>
   );
 };
@@ -60,17 +114,7 @@ const styles = {
     color: "white",
     fontFamily: "'Arial', sans-serif",
   },
-  phoneForm: {
-    background: "rgba(255, 255, 255, 0.1)",
-    padding: "2rem",
-    borderRadius: "15px",
-    boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
-    backdropFilter: "blur(10px)",
-    textAlign: "center",
-    width: "100%",
-    maxWidth: "400px",
-  },
-  otpForm: {
+  formContainer: {
     background: "rgba(255, 255, 255, 0.1)",
     padding: "2rem",
     borderRadius: "15px",
@@ -92,12 +136,6 @@ const styles = {
     outline: "none",
     transition: "background 0.3s ease",
   },
-  inputFieldPlaceholder: {
-    color: "rgba(255, 255, 255, 0.7)",
-  },
-  inputFieldFocus: {
-    background: "rgba(255, 255, 255, 0.3)",
-  },
   submitButton: {
     width: "100%",
     padding: "0.75rem",
@@ -108,13 +146,17 @@ const styles = {
     fontSize: "1rem",
     cursor: "pointer",
     transition: "background 0.3s ease",
-  },
-  submitButtonHover: {
-    background: "#1b5fd9",
+    marginTop: "1rem",
   },
   heading: {
     marginBottom: "1.5rem",
     fontSize: "1.5rem",
     fontWeight: "600",
+  },
+  toggleText: {
+    marginTop: "1.5rem",
+    fontSize: "0.9rem",
+    cursor: "pointer",
+    textDecoration: "underline",
   },
 };
