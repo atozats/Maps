@@ -20,7 +20,7 @@ AtozMap is an open-source project that demonstrates three distinct approaches to
 
 ### `.env` File Example
 ```
-MAPTOKEN=your_mapbox_api_key_here
+REACT_APP_MAPBOX_TOKEN=your_mapbox_api_key_here
 ```
 
 ## Getting Started
