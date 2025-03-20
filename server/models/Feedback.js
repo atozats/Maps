@@ -1,14 +1,13 @@
-
-
 import mongoose from 'mongoose';
 
 const feedbackSchema = new mongoose.Schema(
   {
-    name: {
-      type: String,
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'BetaUser', // Reference to the BetaUser collection
       required: true,
     },
-    phone: {  // Changed from email to phone
+    name: {
       type: String,
       required: true,
     },

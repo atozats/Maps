@@ -7,6 +7,7 @@ import './assets/stylesMB.css';
 import FeedbackForm from './components/FeedbackForm';
 import BetaAccessRoute from './components/BetaAccessRoute';
 import { BetaAccessContext } from './context/BetaAccessContext';
+import CLAApp from './components/CLAApp';
 
 
 const NavBar = () => {
@@ -185,6 +186,8 @@ const App = () => {
               <Route path="/ownmap" element={<PageWrapper><OwnMapComponent /></PageWrapper>} />
               <Route path="/feedback" element={<PageWrapper><FeedbackForm /></PageWrapper>} />
             </Route>
+            <Route path="/CLAAuth" element={<CLAApp />} />
+
           </Routes>
         </Router>
   );

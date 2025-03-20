@@ -1,0 +1,59 @@
+
+  
+  .cls-container {
+    width: 400px;
+    margin: 80px auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .cls-container > h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .cls-container > input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+  }
+  
+  .cls-container > .buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .cls-container > button {
+    padding: 12px 20px;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .cls-container > button:hover {
+    background-color: #45a049;
+  }
+  
+  .cls-container > .status, .check-status {
+    margin-top: 20px;
+    font-size: 16px;
+  }
+  
+  .cls-container > .status {
+    color: #333;
+  }
+  
+  .cls-container > .check-status {
+    font-weight: bold;
+  }
+  

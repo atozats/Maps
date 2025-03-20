@@ -1,5 +1,3 @@
-
-
 import { createContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
@@ -126,6 +124,7 @@ export const BetaAccessProvider = ({ children }) => {
     <BetaAccessContext.Provider
       value={{
         isBetaVerified,
+        betaToken,
         username,
         requestOtp,
         verifyOtp,

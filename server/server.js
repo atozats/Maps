@@ -10,6 +10,8 @@ import Feedback from './models/Feedback.js'; // Import Feedback model
 import sendsms from "./sendsms.js"
 import BetaUser from './models/BetaUser.js';
 import jwt from 'jsonwebtoken';
+import githubRoutes from './routes/githubRoutes.js';
+
 
 
 
@@ -36,9 +38,7 @@ app.get('/', (req, res) => {
 
 console.log("🔍 EMAIL_USER:", process.env.EMAIL_USER);
 console.log("🔍 EMAIL_PASS Loaded:", process.env.EMAIL_PASS ? "✅ Yes" : "❌ No");
-// --------------------
-// 1️⃣ Serve Local Places Data
-// --------------------
+
 
 const placesFilePath = path.join(__dirname, 'phase_6_Ayanagar_delhi_india_places.json');
 
@@ -263,25 +263,42 @@ const transporter = nodemailer.createTransport({
 
 // Feedback API - Save to Database and Send Admin Email
 app.post('/feedback', async (req, res) => {
-  const { name, phone, message } = req.body;  // Changed from email to phone
+  const { message } = req.body;  // Message is expected in the body of the request
+  const token = req.headers['authorization']?.split(' ')[1];  // Extract token after 'Bearer'
+
   
-  if (!name || !phone || !message) {
-    return res.status(400).json({ message: 'All fields are required!' });
+  if (!token) {
+    return res.status(400).json({ message: 'No token provided' });
   }
-  
+
   try {
-    // Save feedback to the database
-    const feedback = new Feedback({ name, phone, message });
+    // Verify JWT
+    const decoded = jwt.verify(token,"your_jwt_secret_key"); // Use your JWT secret
+    const userId = decoded.userId; // Assuming 'userId' is part of the payload
+    console.log(userId)
+    // Get user details from BetaUser collection
+    const user = await BetaUser.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Save feedback to the database with userId, name, and message
+    const feedback = new Feedback({
+      userId: user._id,   // Store the userId (ID of the user from the JWT)
+      name: user.username, // Get username from BetaUser model
+      message: message,    // Use the message from the request body
+    });
+
     await feedback.save();
     
-    // Send email to admin (optional)
+    // Optionally, send email to admin
     const adminMailOptions = {
       from: process.env.EMAIL_USER,
       to: 'info.atozmap@atozas.com', // Admin email
-      subject: `New Feedback from ${name}`,
-      text: `Name: ${name}\nPhone: ${phone}\nMessage: ${message}`,
+      subject: `New Feedback from ${user.username}`,
+      text: `User ID: ${user._id}\nName: ${user.username}\nMessage: ${message}`,
     };
-    
+
     await transporter.sendMail(adminMailOptions);
     
     res.status(200).json({ message: 'Feedback sent successfully!' });
@@ -403,7 +420,7 @@ app.post('/verify-otp', async (req, res) => {
         username: user.username,
         userId: user._id 
       }, 
-      'your_jwt_secret_key', 
+      process.env.JWT_SECRET, 
       { expiresIn: '30d' }
     );
     
@@ -429,7 +446,7 @@ app.post('/verify-otp', async (req, res) => {
 // Verify Token
 app.post('/verify-token', async (req, res) => {
   try {
-    const decoded = jwt.verify(req.body.token, 'your_jwt_secret_key');
+    const decoded = jwt.verify(req.body.token, process.env.JWT_SECRET);
     
     // Check if user still exists in database
     const user = await BetaUser.findOne({ phone: decoded.phone });
@@ -447,7 +464,7 @@ app.post('/verify-token', async (req, res) => {
   }
 });
 
-
+app.use('/api', githubRoutes);
 // Start the Server
 app.listen(PORT, () => {
   console.log(`✅ Server running at: http://localhost:${PORT}`);

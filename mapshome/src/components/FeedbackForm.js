@@ -1,11 +1,9 @@
-
-
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { BetaAccessContext } from "../context/BetaAccessContext";
 
 const FeedbackForm = () => {
+  const { betaToken } = useContext(BetaAccessContext); // Access betaAccessToken from context
   const [formData, setFormData] = useState({
-    name: "",
-    phone: "",
     message: "",
   });
 
@@ -19,13 +17,14 @@ const FeedbackForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setStatus("Sending...");
+    setStatus("Sending...");  
 
     try {
       const response = await fetch("http://localhost:5000/feedback", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${betaToken}`, // Send betaAccessToken as a header
         },
         body: JSON.stringify(formData),
       });
@@ -35,7 +34,7 @@ const FeedbackForm = () => {
 
 Best regards,
 The AtozMap Team`);
-        setFormData({ name: "", phone: "", message: "" });
+        setFormData({ message: "" });
       } else {
         setStatus("❌ Error sending feedback. Please try again.");
       }
@@ -184,40 +183,6 @@ The AtozMap Team`);
           Your thoughts help us improve. Please share your feedback below.
         </p>
         <form onSubmit={handleSubmit} style={styles.form}>
-          {/* Name Input */}
-          <label style={styles.label}>
-            Name:
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-              style={styles.input}
-              onFocus={(e) =>
-                (e.target.style.borderColor = styles.inputFocus.borderColor)
-              }
-              onBlur={(e) => (e.target.style.borderColor = "#ddd")}
-            />
-          </label>
-
-          {/* Phone Input (replacing Email) */}
-          <label style={styles.label}>
-            Phone Number:
-            <input
-              type="tel"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              required
-              style={styles.input}
-              onFocus={(e) =>
-                (e.target.style.borderColor = styles.inputFocus.borderColor)
-              }
-              onBlur={(e) => (e.target.style.borderColor = "#ddd")}
-            />
-          </label>
-
           {/* Message Input */}
           <label style={styles.label}>
             Message:
