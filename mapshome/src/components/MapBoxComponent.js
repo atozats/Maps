@@ -19,8 +19,8 @@ const MapBoxComponent = () => {
   const [isDropOffSearching, setIsDropOffSearching] = useState(false);
 
   useEffect(() => {
-    // Initialize map
-    mapboxgl.accessToken = 'pk.eyJ1IjoidGhvYWJlbCIsImEiOiJjbTZxYjh2ZjUxc3N1MmxxeTBkMWdlMmJhIn0.ZBFKenlvBw_7v_3MkIb7Ag';
+    // Initialize map with token from environment variable
+    mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
     
     const mapInstance = new mapboxgl.Map({
       container: mapContainerRef.current,
