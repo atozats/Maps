@@ -19,8 +19,18 @@ AtozMap is an open-source project that demonstrates three distinct approaches to
 - **MapBox API Key**: Obtain a MapBox API key and add it to a `.env` file in the root directory.
 
 ### `.env` File Example
+
+#### mapshome `.env` File
 ```
 REACT_APP_MAPBOX_TOKEN=your_mapbox_api_key_here
+```
+
+#### server `.env` File
+```
+EMAIL_USER=your_email_user_here
+EMAIL_PASS=your_email_password_here
+MONGODB_URI=your_mongodb_connection_string_here
+JWT_SECRET=your_jwt_secret_here
 ```
 
 ## Getting Started
@@ -30,11 +40,6 @@ Follow these steps to set up and run the project locally:
 ### 1. Clone the Repository
 ```bash
 git clone https://github.com/atozats/Maps.git
-```
-
-### 2. Navigate to the Project Directories
-```bash
-cd Maps
 ```
 
 ### 3. Install Dependencies
