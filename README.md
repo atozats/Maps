@@ -68,6 +68,8 @@ npm start
 
 Contributions are welcome! Feel free to fork the repository and submit pull requests.
 
+Please ensure you have signed the [Contributor License Agreement (CLA)](./.github/CLA.md) before contributing.
+
 ## License
 
 This project is licensed under the MIT License. See the LICENSE file for details.
