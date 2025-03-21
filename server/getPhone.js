@@ -1,8 +1,13 @@
 import { MongoClient } from 'mongodb';
 import fs from 'fs';  // Import the file system module
+import dotenv from 'dotenv'; // Import dotenv to read the .env file
 
-// Connection URI
-const uri = 'mongodb://localhost:27017'; // Replace with your MongoDB URI
+// Load environment variables from the .env file
+dotenv.config();
+
+// Connection URI from .env file
+const uri = process.env.MONGODB_URI; // Use the environment variable
+
 const client = new MongoClient(uri);
 
 // Database and collection names
