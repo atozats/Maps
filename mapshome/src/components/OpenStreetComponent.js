@@ -76,7 +76,7 @@ const OpenStreetComponent = () => {
   // Fetch places data from backend
   useEffect(() => {
     axios
-      .get("http://localhost:5000/places")
+      .get("https://atozmap.com/places")
       .then((response) => {
         setPlaces(response.data);
       })

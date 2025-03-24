@@ -273,7 +273,7 @@ app.post('/feedback', async (req, res) => {
 
   try {
     // Verify JWT
-    const decoded = jwt.verify(token,"your_jwt_secret_key"); // Use your JWT secret
+    const decoded = jwt.verify(token, process.env.JWT_SECRET); // Use your JWT secret
     const userId = decoded.userId; // Assuming 'userId' is part of the payload
     console.log(userId)
     // Get user details from BetaUser collection

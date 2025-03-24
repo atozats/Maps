@@ -22,7 +22,7 @@ export const BetaAccessProvider = ({ children }) => {
 
   const verifyToken = async (token) => {
     try {
-      const res = await axios.post("http://localhost:5000/verify-token", { token });
+      const res = await axios.post("https://atozmap.com/verify-token", { token });
       if (res.data.success) {
         setIsBetaVerified(true);
         setBetaToken(token);
@@ -38,7 +38,7 @@ export const BetaAccessProvider = ({ children }) => {
 
   const requestOtp = async (phoneNumber) => {
     try {
-      const res = await axios.post("http://localhost:5000/request-otp", { phone: phoneNumber });
+      const res = await axios.post("https://atozmap.com/request-otp", { phone: phoneNumber });
       if (res.data.success) {
         setOtpSent(true);
         setPhone(phoneNumber);
@@ -53,7 +53,7 @@ export const BetaAccessProvider = ({ children }) => {
 
   const verifyOtp = async (otp) => {
     try {
-      const res = await axios.post("http://localhost:5000/verify-otp", { 
+      const res = await axios.post("https://atozmap.com/verify-otp", { 
         phone, 
         otp,
         isRegistering,
@@ -82,7 +82,7 @@ export const BetaAccessProvider = ({ children }) => {
 
   const registerUser = async (username, phoneNumber) => {
     try {
-      const res = await axios.post("http://localhost:5000/register", { 
+      const res = await axios.post("https://atozmap.com/register", { 
         username, 
         phone: phoneNumber 
       });
