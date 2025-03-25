@@ -228,12 +228,12 @@ body {
 }
 /* Update these classes in your CSS file */
 .openstreet-image {
-  background-image: url('../assets/openstreetmap.png');
+  background-image: url('../assets/openstreetmap.jpg');
   background-size: cover;
 }
 
 .mapbox-image {
-  background-image: url('../assets/mapbox.png');
+  background-image: url('../assets/mapbox.jpg');
   background-size: cover;
 }
 
