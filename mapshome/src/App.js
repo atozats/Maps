@@ -83,7 +83,7 @@ const HomePage = () => {
             <div className="map-card">
               <div className="map-image mapbox-image"></div>
               <div className="map-content">
-                <h3 className="map-card-title">Map from MapBox</h3>
+                <h3 className="map-card-title">MapBox implementation </h3>
                 <p className="map-card-text">
                   Our MapBox implementation leverages the power of MapBox tokens to create a feature-rich, customizable map. With custom styling and interactive elements, this solution is ideal for applications requiring advanced mapping capabilities and a polished user experience.
                 </p>
@@ -95,7 +95,7 @@ const HomePage = () => {
             <div className="map-card">
               <div className="map-image ownmap-image"></div>
               <div className="map-content">
-                <h3 className="map-card-title">Map from atozmap</h3>
+                <h3 className="map-card-title">atozmap</h3>
                 <p className="map-card-text">
                   The most unique aspect of our project is the OwnMap implementation. Built entirely from scratch without relying on external APIs or tokens, this custom map solution uses three JSON files (<code>countriesandstates.json</code>, <code>countries-110m.json</code>, and <code>allcountriesdetails.json</code>) to render maps. This approach gives developers complete control over their cartographic creations. We are grateful for the availability of these JSON files, which have made this implementation possible.
                 </p>
