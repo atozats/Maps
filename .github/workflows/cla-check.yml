@@ -17,7 +17,7 @@ jobs:
       - name: Check if User Has Signed CLA
         id: check_cla
         run: |
-          RESPONSE=$(curl -s -X POST "https://atozmap.com/api/check-cla" -H "Content-Type: application/json" -d "{\"username\": \"${{ env.AUTHOR }}\"}")
+          RESPONSE=$(curl -s -X POST "http://localhost:5000/api/check-cla" -H "Content-Type: application/json" -d "{\"username\": \"${{ env.AUTHOR }}\"}")
           SIGNED=$(echo $RESPONSE | jq -r '.signed')
 
           if [[ "$SIGNED" == "true" ]]; then
@@ -39,7 +39,7 @@ jobs:
             const repo = context.repo.repo;
             const owner = context.repo.owner;
 
-            const message = `@${author}, you need to sign the CLA before we can merge your PR.\n\n🔗 Please sign the CLA here: [Sign CLA](https://atozmap.com/CLAAuth)\n\nOnce you've signed, re-run the checks by pushing a new commit or closing and reopening the PR.`;
+            const message = `@${author}, you need to sign the CLA before we can merge your PR.\n\n🔗 Please sign the CLA here: [Sign CLA](http://localhost:5000/CLAAuth)\n\nOnce you've signed, re-run the checks by pushing a new commit or closing and reopening the PR.`;
 
             github.rest.issues.createComment({
               owner,

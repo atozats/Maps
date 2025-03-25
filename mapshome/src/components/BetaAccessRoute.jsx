@@ -1,5 +1,3 @@
-
-
 import { useContext, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { BetaAccessContext } from "../context/BetaAccessContext";
@@ -103,60 +101,63 @@ const BetaAccessRoute = () => {
 
 export default BetaAccessRoute;
 
-// CSS Styles (Inline using JavaScript objects)
+// Updated CSS Styles (Inline using JavaScript objects)
 const styles = {
   betaAccessContainer: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     height: "100vh",
-    background: "linear-gradient(135deg, #6a11cb, #2575fc)",
-    color: "white",
-    fontFamily: "'Arial', sans-serif",
+    backgroundColor: "#0f111c", // Dark background
+    fontFamily: "'Poppins', sans-serif",
   },
   formContainer: {
-    background: "rgba(255, 255, 255, 0.1)",
-    padding: "2rem",
-    borderRadius: "15px",
-    boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
-    backdropFilter: "blur(10px)",
-    textAlign: "center",
+    background: "#171b2d",
+    padding: "2.5rem",
+    borderRadius: "20px",
+    boxShadow: "0 0 15px rgba(0, 0, 0, 0.7)",
     width: "100%",
     maxWidth: "400px",
+    color: "#e5e7eb",
+  },
+  heading: {
+    marginBottom: "2rem",
+    fontSize: "1.8rem",
+    fontWeight: "600",
+    color: "#a3ffb7", // Green accent
+    textAlign: "center",
   },
   inputField: {
     width: "100%",
-    padding: "0.75rem",
+    padding: "1rem",
     margin: "1rem 0",
     border: "none",
-    borderRadius: "8px",
-    background: "rgba(255, 255, 255, 0.2)",
-    color: "white",
+    borderRadius: "12px",
+    background: "#232742",
+    color: "#e5e7eb",
     fontSize: "1rem",
     outline: "none",
     transition: "background 0.3s ease",
   },
   submitButton: {
     width: "100%",
-    padding: "0.75rem",
+    padding: "1rem",
     border: "none",
-    borderRadius: "8px",
-    background: "#2575fc",
-    color: "white",
-    fontSize: "1rem",
+    borderRadius: "12px",
+    background: "#a3ffb7", // Green button
+    color: "#0f111c",
+    fontSize: "1.1rem",
+    fontWeight: "600",
     cursor: "pointer",
     transition: "background 0.3s ease",
-    marginTop: "1rem",
-  },
-  heading: {
-    marginBottom: "1.5rem",
-    fontSize: "1.5rem",
-    fontWeight: "600",
   },
   toggleText: {
     marginTop: "1.5rem",
     fontSize: "0.9rem",
     cursor: "pointer",
     textDecoration: "underline",
+    color: "#8e95a9",
+    textAlign: "center",
   },
 };
+// Path: mapshome/src/context/BetaAccessContext.jsx

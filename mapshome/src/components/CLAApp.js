@@ -9,7 +9,7 @@ const CLAApp = () => {
   const handleSign = async () => {
     setStatus('');
     try {
-      const res = await fetch('http://localhost:5000/api/cla-sign', {
+      const res = await fetch('https://atozmap.com/api/cla-sign', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username }),
@@ -24,7 +24,7 @@ const CLAApp = () => {
   const handleCheck = async () => {
     setCheckStatus('');
     try {
-      const res = await fetch('http://localhost:5000/api/check-cla', {
+      const res = await fetch('https://atozmap.com/api/check-cla', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username }),
