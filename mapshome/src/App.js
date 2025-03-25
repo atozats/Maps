@@ -9,7 +9,6 @@ import BetaAccessRoute from './components/BetaAccessRoute';
 import { BetaAccessContext } from './context/BetaAccessContext';
 import CLAApp from './components/CLAApp';
 
-
 const NavBar = () => {
   const { isBetaVerified, logoutUser, username } = useContext(BetaAccessContext);
   
@@ -20,6 +19,11 @@ const NavBar = () => {
           <Link to="/" className="logo-link">atozmap</Link>
         </div>
         <div className="navbar-links">
+          <Link to="/mapbox" className="nav-link">MapBox</Link>
+          <Link to="/openstreet" className="nav-link">OpenStreet</Link>
+          <Link to="/ownmap" className="nav-link">atozmap</Link>
+          <Link to="/feedback" className="nav-link">Feedback</Link>
+          <a href="https://github.com/atozats/Maps.git" className="nav-link github-link">GitHub</a>
           {isBetaVerified && (
             <>
               <span className="welcome-message">Welcome, {username}</span>
@@ -31,6 +35,7 @@ const NavBar = () => {
     </nav>
   );
 };
+
 const HomePage = () => {
   return (
     <div className="homepage">
@@ -68,7 +73,7 @@ const HomePage = () => {
               <div className="map-content">
                 <h3 className="map-card-title">OpenStreetMap Viewer</h3>
                 <p className="map-card-text">
-                  Our OpenStreetMap implementation uses freely available OpenStreetMap tile URLs to create an interactive map. We’ve enhanced it with location markers using the Google API, demonstrating how open-source mapping can be integrated with external services. This approach is cost-effective and highly customizable.
+                  Our OpenStreetMap implementation uses freely available OpenStreetMap tile URLs to create an interactive map. We've enhanced it with location markers using the Google API, demonstrating how open-source mapping can be integrated with external services. This approach is cost-effective and highly customizable.
                 </p>
                 <Link to="/openstreet" className="map-button">Explore OpenStreetMap</Link>
               </div>
@@ -90,17 +95,16 @@ const HomePage = () => {
             <div className="map-card">
               <div className="map-image ownmap-image"></div>
               <div className="map-content">
-                <h3 className="map-card-title">Map from OwnMap</h3>
+                <h3 className="map-card-title">Map from atozmap</h3>
                 <p className="map-card-text">
                   The most unique aspect of our project is the OwnMap implementation. Built entirely from scratch without relying on external APIs or tokens, this custom map solution uses three JSON files (<code>countriesandstates.json</code>, <code>countries-110m.json</code>, and <code>allcountriesdetails.json</code>) to render maps. This approach gives developers complete control over their cartographic creations. We are grateful for the availability of these JSON files, which have made this implementation possible.
                 </p>
-                <Link to="/ownmap" className="map-button">Explore OwnMap</Link>
+                <Link to="/ownmap" className="map-button">Explore atozmap</Link>
               </div>
             </div>
           </div>
         </div>
       </section>
-
 
       {/* Feedback and GitHub Invitation Section */}
       <section className="feedback-github-section">
@@ -125,7 +129,7 @@ const HomePage = () => {
                 "Great code is not just written; it's crafted with passion and collaboration."
               </blockquote>
               <p className="github-text">
-                If you’re passionate about mapping, open-source development, or innovative solutions, we’d love to collaborate with you. Let’s build something extraordinary together!
+                If you're passionate about mapping, open-source development, or innovative solutions, we'd love to collaborate with you. Let's build something extraordinary together!
               </p>
               <a href="https://github.com/atozats/Maps.git" className="github-button">Join Us on GitHub</a>
             </div>
@@ -133,19 +137,18 @@ const HomePage = () => {
         </div>
       </section>
 
-
       {/* Developer Invitation Section */}
       <section className="developer-section">
         <div className="container">
           <h2 className="developer-title">Join Our Development Journey</h2>
           <p className="developer-text">
-            We’re particularly excited about advancing our OwnMap implementation, pushing the boundaries of what’s possible with custom mapping solutions. Our goal is to create a truly independent mapping system that empowers developers to build maps tailored to their specific needs.
+            We're particularly excited about advancing our OwnMap implementation, pushing the boundaries of what's possible with custom mapping solutions. Our goal is to create a truly independent mapping system that empowers developers to build maps tailored to their specific needs.
           </p>
           <blockquote className="inspirational-quote">
             "Maps are the canvas upon which we paint our understanding of the world. With technology as our brush, we can create new ways to visualize and interact with the spaces around us."
           </blockquote>
           <p className="developer-text emphasis-text">
-            If you’re passionate about mapping, open-source development, or innovative solutions, we’d love to collaborate with you. Let’s build something extraordinary together!
+            If you're passionate about mapping, open-source development, or innovative solutions, we'd love to collaborate with you. Let's build something extraordinary together!
           </p>
           <div className="cta-container">
             <a href="https://github.com/atozats/Maps.git" className="cta-button">Join Us on GitHub</a>
@@ -163,6 +166,7 @@ const HomePage = () => {
     </div>
   );
 };
+
 const PageWrapper = ({ children }) => {
   return (
     <>
@@ -172,26 +176,21 @@ const PageWrapper = ({ children }) => {
   );
 };
 
-
 const App = () => {
   return (
-  
-
-     <Router>
-          <Routes>
-            <Route element={<BetaAccessRoute />}>
-              <Route path="/" element={<PageWrapper><HomePage /></PageWrapper>} />
-              <Route path="/mapbox" element={<PageWrapper><MapBoxComponent /></PageWrapper>} />
-              <Route path="/openstreet" element={<PageWrapper><OpenStreetComponent /></PageWrapper>} />
-              <Route path="/ownmap" element={<PageWrapper><OwnMapComponent /></PageWrapper>} />
-              <Route path="/feedback" element={<PageWrapper><FeedbackForm /></PageWrapper>} />
-            </Route>
-            <Route path="/CLAAuth" element={<CLAApp />} />
-
-          </Routes>
-        </Router>
+    <Router>
+      <Routes>
+        <Route element={<BetaAccessRoute />}>
+          <Route path="/" element={<PageWrapper><HomePage /></PageWrapper>} />
+          <Route path="/mapbox" element={<MapBoxComponent />} />
+          <Route path="/openstreet" element={<OpenStreetComponent />} />
+          <Route path="/ownmap" element={<OwnMapComponent />} />
+          <Route path="/feedback" element={<FeedbackForm />} />
+        </Route>
+        <Route path="/CLAAuth" element={<CLAApp />} />
+      </Routes>
+    </Router>
   );
 };
 
 export default App;
-

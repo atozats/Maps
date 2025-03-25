@@ -36,7 +36,7 @@ You represent that:
 By submitting a Contribution, You agree to the terms of this Agreement.
 
 To sign the CLA:
-1. [click here to go the signing page for atozmap](http://localhost:5000/CLAAuth).
+1. [click here to go the signing page for atozmap](https://atozmap.com/CLAAuth).
 2. Open a pull request with your change.
 
 Your PRs will not be merged unless your sign.
