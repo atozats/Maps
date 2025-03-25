@@ -43,9 +43,9 @@ const BetaAccessRoute = () => {
           {showRegister
             ? isRegistering && otpSent
               ? "Verify OTP to Complete Registration"
-              : "Register for Beta Access"
+              : "Register for atozmap"
             : !otpSent
-            ? "Login to Beta Access"
+            ? "Login to atozmap"
             : "Enter OTP to Login"}
         </h2>
 
